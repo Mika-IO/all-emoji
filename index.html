@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emojis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Container -->
+    <div class="max-w-4xl mx-auto p-6">
+        <h1 class="text-4xl font-bold text-center mb-8">Emojis</h1>
+
+        <!-- Search Bar -->
+        <div class="mb-6">
+            <input 
+                type="text" 
+                id="search" 
+                placeholder="Pesquisar emojis..." 
+                class="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" 
+            />
+        </div>
+
+        <!-- Emoji Grid -->
+        <div id="emoji-container" class="grid grid-cols-4 gap-4">
+            <!-- Emojis serão gerados aqui pelo JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Lista de Emojis (um exemplo simples)
+        const emojis = [
+            "😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊",
+            "😋", "😎", "😍", "😘", "😗", "😙", "😚", "🙂", "🤗", "🤩",
+            "😜", "😝", "😛", "🤑", "🤐", "😷", "🤒", "🤕", "🤢", "🤮",
+            "🤧", "😇", "🤠", "🤡", "🤥", "🤫", "🤭", "🧐", "🤓", "😈"
+        ];
+
+        // Função para exibir os emojis
+        const displayEmojis = (filter = '') => {
+            const container = document.getElementById("emoji-container");
+            container.innerHTML = ''; // Limpar o conteúdo
+
+            // Filtrar emojis com base na pesquisa
+            const filteredEmojis = emojis.filter(emoji => emoji.includes(filter));
+
+            // Adicionar os emojis ao container
+            filteredEmojis.forEach(emoji => {
+                const emojiDiv = document.createElement("div");
+                emojiDiv.classList.add("text-4xl", "p-4", "bg-white", "border", "rounded-lg", "text-center", "cursor-pointer", "hover:bg-gray-200");
+                emojiDiv.textContent = emoji;
+                emojiDiv.onclick = () => copyToClipboard(emoji);
+                container.appendChild(emojiDiv);
+            });
+        };
+
+        // Função para copiar o emoji para a área de transferência
+        const copyToClipboard = (emoji) => {
+            navigator.clipboard.writeText(emoji).then(() => {
+                alert("Emoji copiado: " + emoji);
+            });
+        };
+
+        // Evento de pesquisa
+        document.getElementById("search").addEventListener("input", (event) => {
+            displayEmojis(event.target.value);
+        });
+
+        // Exibir todos os emojis inicialmente
+        displayEmojis();
+
+    </script>
+
+</body>
+</html>
